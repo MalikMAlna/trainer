@@ -157,10 +157,10 @@ payload = {
         "subtitles": "false",
         "provider": {
             "type": "elevenlabs",
-            "voice_id": WHITEGMAN_VOICE_ID
+            "voice_id": "2EiwWnXFnvU5JabPnv8n"
         },
         "ssml": "false",
-        "input": "Hello Afif"
+        "input": content
     },
     "config": {
         "fluent": "false",
