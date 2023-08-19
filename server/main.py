@@ -94,9 +94,10 @@ response = openai.ChatCompletion.create(
     max_tokens=100,
 )
 
-print(response["choices"][0]["message"]["content"])
+content = response["choices"][0]["message"]["content"]
+print(content)
 with open("output.txt", "w") as f:
-    f.write(response["choices"][0]["message"]["content"])
+    f.write(content)
 
 # best_ai_response = "Nobody makes me bleed my own blood, nobody! So get off your posterior and let's turn you from a 'below-average Joe' to a spectacular specimen of human machinery. Remember, success demands sweat, toil, and a dash of White Goodman style insanity!"
 
