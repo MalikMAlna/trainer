@@ -1,11 +1,40 @@
 import os
 from dotenv import load_dotenv
 import openai
+import sounddevice as sd
+import numpy as np
+import wavio
+
 
 load_dotenv()
 
 # Capture Audio from Microphone
+# Parameters for recording
+RATE = 44100    # Sample Rate
+CHANNELS = 2    # Number of channels
+DTYPE = np.int16  # Data-type
+SECONDS = 10     # Length of recording in seconds
+FILENAME = "input.wav"  # Output filename
 
+# Create a NumPy array with the shape and type
+shape = (RATE * SECONDS, CHANNELS)
+audio_data = np.zeros(shape, dtype=DTYPE)
+
+# Callback function to capture audio
+
+
+def callback(indata, frames, time, status):
+    audio_data[:frames] = indata
+
+
+# Create a stream object
+with sd.InputStream(callback=callback, channels=CHANNELS, samplerate=RATE, dtype=DTYPE):
+    print("Recording for {} seconds...".format(SECONDS))
+    sd.sleep(SECONDS * 1000)
+
+# Save the audio file
+wavio.write(FILENAME, audio_data, RATE, sampwidth=2)
+print("Recording saved to {}".format(FILENAME))
 
 # Convert Audio to Text with Whisper API
 
