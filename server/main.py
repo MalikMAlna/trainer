@@ -5,6 +5,7 @@ import sounddevice as sd
 import numpy as np
 import wavio
 import queue
+import requests
 
 
 load_dotenv()
@@ -93,11 +94,13 @@ response = openai.ChatCompletion.create(
 )
 
 print(response["choices"][0]["message"]["content"])
+with open("output.txt", "w") as f:
+    f.write(response["choices"][0]["message"]["content"])
 
-
-best_ai_response = "Nobody makes me bleed my own blood, nobody! So get off your posterior and let's turn you from a 'below-average Joe' to a spectacular specimen of human machinery. Remember, success demands sweat, toil, and a dash of White Goodman style insanity!"
+# best_ai_response = "Nobody makes me bleed my own blood, nobody! So get off your posterior and let's turn you from a 'below-average Joe' to a spectacular specimen of human machinery. Remember, success demands sweat, toil, and a dash of White Goodman style insanity!"
 
 # Send Response Text to ElevenLabs API
+
 
 # Receive Response Audio File from ElevenLabs API
 
