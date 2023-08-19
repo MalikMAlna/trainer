@@ -90,7 +90,8 @@ messages = [{
 
 response = openai.ChatCompletion.create(
     model=model_engine,
-    messages=messages
+    messages=messages,
+    max_tokens=100,
 )
 
 print(response["choices"][0]["message"]["content"])

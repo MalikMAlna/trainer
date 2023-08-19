@@ -15,6 +15,8 @@ const RecordingButton = ({ onStartRecording, onStopRecording }) => {
     onStopRecording();
   };
 
+  
+
   return (
     <div
       style={{
