@@ -1,6 +1,15 @@
 import RecordingButton from "../components/RecordingButton";
 import { useState, useEffect } from "react";
 import ReactPlayer from "react-player/lazy";
+import fs from "fs/promises";
+
+export async function getServerSideProps() {
+  const talkId = await fs.readFile(process.env.TALK_ID_PATH, "utf8");
+
+  return {
+    props: { talkId: talkId },
+  };
+}
 
 const fallingItemsStyle = {
   position: "absolute",
@@ -29,7 +38,7 @@ const headerStyle = {
   zIndex: "1",
 };
 
-const Home = () => {
+const Home = ({ talkId }) => {
   const [isRecording, setIsRecording] = useState(false);
   const [recordedChunks, setRecordedChunks] = useState([]);
   const [recordings, setRecordings] = useState([]);
@@ -119,7 +128,8 @@ const Home = () => {
     // } catch (error) {
     //   console.error("Error starting recording:", error);
     // }
-    const talkId = "tlk_rx6-WBk94oHnVw9daZkoC";
+    // const talkId = "tlk_bxzGQGb5u-bjXNjJ_jCXQ";
+    // const { talkId } = useHomeProps();
     setVideoLink(null);
     setIsRecording(true);
     try {

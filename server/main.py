@@ -7,7 +7,6 @@ import wavio
 import queue
 import requests
 import base64
-import time
 
 load_dotenv()
 
@@ -107,7 +106,7 @@ with open("output.txt", "w") as f:
 
 auth_token = os.getenv("D-ID_API_KEY")
 
-white_voice_id = os.getenv("WHITE_VOICE_ID")
+white_gman_voice_id = os.getenv("WHITEGMAN_VOICE_ID")
 
 d_id_url = "https://api.d-id.com/talks"
 
@@ -127,7 +126,7 @@ payload = {
         "subtitles": "false",
         "provider": {
             "type": "elevenlabs",
-            "voice_id": "2EiwWnXFnvU5JabPnv8n"
+            "voice_id": white_gman_voice_id
         },
         "ssml": "false",
         "input": content
@@ -146,5 +145,8 @@ print(response)
 talk_id = response.json()["id"]
 
 print(talk_id)
+
+with open("talk_id.txt", "w") as f:
+    f.write(talk_id)
 
 # Play Response Audio File and Visual with D-ID
