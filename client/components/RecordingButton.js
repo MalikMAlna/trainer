@@ -2,16 +2,13 @@ import { useState } from "react";
 import Image from "next/image"; // Import the NextImage component
 import recordingIcon from "../public/images/recording-icon.svg";
 
-const RecordingButton = ({ onStartRecording, onStopRecording }) => {
-  const [isRecording, setIsRecording] = useState(false);
+const RecordingButton = ({ onStartRecording, onStopRecording, isRecording }) => {
 
   const handleTouchStart = () => {
-    setIsRecording(true);
     onStartRecording();
   };
 
   const handleTouchEnd = () => {
-    setIsRecording(false);
     onStopRecording();
   };
 
@@ -32,8 +29,9 @@ const RecordingButton = ({ onStartRecording, onStopRecording }) => {
       <button
         // onTouchStart={handleTouchStart}
         // onTouchEnd={handleTouchEnd}
-        onMouseDown={handleTouchStart}
-        onMouseUp={handleTouchEnd}
+        // onMouseDown={handleTouchStart}
+        // onMouseUp={handleTouchEnd}
+        onClick={handleTouchStart}
         style={{
           width: "100%",
           height: "100%",

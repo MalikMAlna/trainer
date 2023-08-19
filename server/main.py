@@ -7,6 +7,7 @@ import wavio
 import queue
 import requests
 import base64
+import time
 
 load_dotenv()
 
@@ -136,16 +137,16 @@ else:
 
 # Get Audio File and Visual with D-ID
 
-d_id_url = "https://api.d-id.com/talks"
-
 auth_token = os.getenv("D-ID_API_KEY")
+
+d_id_url = "https://api.d-id.com/talks"
 
 base64_credentials = base64.b64encode(
     f"{auth_token}".encode('ascii')
 ).decode('ascii')
 
 headers = {
-    'Content-Type': 'application/json',
+    "Content-Type": "multipart/form-data",
     'Accept': 'application/json',
     'Authorization': f'Basic {base64_credentials}'
 }
@@ -159,7 +160,7 @@ payload = {
             "voice_id": WHITEGMAN_VOICE_ID
         },
         "ssml": "false",
-        "input": content
+        "input": "Hello Afif"
     },
     "config": {
         "fluent": "false",
@@ -170,8 +171,6 @@ payload = {
 
 response = requests.post(d_id_url, json=payload, headers=headers)
 
-print(response)
 print(response.text)
-
 
 # Play Response Audio File and Visual with D-ID
