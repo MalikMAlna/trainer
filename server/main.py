@@ -6,7 +6,7 @@ import numpy as np
 import wavio
 import queue
 import requests
-
+import base64
 
 load_dotenv()
 
@@ -99,6 +99,79 @@ print(content)
 with open("output.txt", "w") as f:
     f.write(content)
 
+# Get Audio File with Eleven Labs
+
+# Set voice_id to env variable called whitegman_voice_id
+WHITEGMAN_VOICE_ID = os.getenv("WHITEGMAN_VOICE_ID")
+
+url = f"https://api.elevenlabs.io/v1/text-to-speech/{WHITEGMAN_VOICE_ID}?optimize_streaming_latency=0"
+
+headers = {
+    "accept": "audio/mpeg",
+    "xi-api-key": os.getenv('ELEVENLABS_API_KEY'),
+    "Content-Type": "application/json",
+}
+
+payload = {
+    "text": content,
+    "model_id": "eleven_monolingual_v1",
+    "voice_settings": {
+        "stability": 0.9,
+        "similarity_boost": 0.75,
+        "style": 0.5,
+        "use_speaker_boost": True
+    }
+}
+
+response = requests.post(url, json=payload, headers=headers)
+
+# Handle the response as needed
+if response.status_code == 200:
+    with open("output.mp4", "wb") as file:
+        file.write(response.content)
+else:
+    print(f"Request failed with status code {response.status_code}")
+
 # best_ai_response = "Nobody makes me bleed my own blood, nobody! So get off your posterior and let's turn you from a 'below-average Joe' to a spectacular specimen of human machinery. Remember, success demands sweat, toil, and a dash of White Goodman style insanity!"
+
+# Get Audio File and Visual with D-ID
+
+d_id_url = "https://api.d-id.com/talks"
+
+auth_token = os.getenv("D-ID_API_KEY")
+
+base64_credentials = base64.b64encode(
+    f"{auth_token}".encode('ascii')
+).decode('ascii')
+
+headers = {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+    'Authorization': f'Basic {base64_credentials}'
+}
+
+payload = {
+    "script": {
+        "type": "text",
+        "subtitles": "false",
+        "provider": {
+            "type": "elevenlabs",
+            "voice_id": WHITEGMAN_VOICE_ID
+        },
+        "ssml": "false",
+        "input": content
+    },
+    "config": {
+        "fluent": "false",
+        "pad_audio": "0.0"
+    },
+    "source_url": "https://storage.googleapis.com/whitegman/whitegman.jpg"
+}
+
+response = requests.post(d_id_url, json=payload, headers=headers)
+
+print(response)
+print(response.text)
+
 
 # Play Response Audio File and Visual with D-ID
