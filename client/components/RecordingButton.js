@@ -14,37 +14,38 @@ const RecordingButton = ({ onStartRecording, onStopRecording }) => {
     setIsRecording(false);
     onStopRecording();
   };
-
+  console.log("is reacording", isRecording);
   return (
-    <div className="w-16 h-16 mx-auto">
+    <div
+      style={{
+        width: "16rem",
+        height: "16rem",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        margin: "auto",
+        flexDirection: "column",
+      }}
+    >
       <button
-        className={`w-full h-full ${isRecording ? "bg-red-700" : "bg-red-500"}`}
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
+        // onTouchStart={handleTouchStart}
+        // onTouchEnd={handleTouchEnd}
         onMouseDown={handleTouchStart}
         onMouseUp={handleTouchEnd}
-      >
-        {isRecording ? (
-          <div className="animate-pulse absolute w-full h-full">
-            <Image
-              src={recordingIcon}
-              alt="Recording Icon"
-              width={48}
-              height={48}
-              className="w-full h-full"
-            />
-          </div>
-        ) : (
-          // Render the SVG or icon of your choice for the non-recording state
-          <Image
-            src={recordingIcon}
-            alt="Recording Icon"
-            width={48}
-            height={48}
-            className="w-full h-full"
-          />
-        )}
-      </button>
+        style={{
+          width: "100%",
+          height: "100%",
+          backgroundColor: isRecording ? "#B91C1C" : "#EF4444", // Adjusted colors
+          border: "none",
+          borderRadius: "50%",
+          animation: isRecording ? "blink 1s linear infinite" : "none", // Added animation
+        }}
+      />
+      {isRecording ? (
+        <p>Recording in process...</p>
+      ) : (
+        <p>Press and hold to record</p>
+      )}
     </div>
   );
 };

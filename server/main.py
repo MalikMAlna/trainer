@@ -8,13 +8,16 @@ import wavio
 
 load_dotenv()
 
+openai.api_key = os.getenv("OPENAI_API_KEY")
+
 # Capture Audio from Microphone
+
 # Parameters for recording
 RATE = 44100    # Sample Rate
 CHANNELS = 2    # Number of channels
 DTYPE = np.int16  # Data-type
 SECONDS = 10     # Length of recording in seconds
-FILENAME = "input.wav"  # Output filename
+FILENAME = "input.mp4"  # Output filename
 
 # Create a NumPy array with the shape and type
 shape = (RATE * SECONDS, CHANNELS)
@@ -37,6 +40,25 @@ wavio.write(FILENAME, audio_data, RATE, sampwidth=2)
 print("Recording saved to {}".format(FILENAME))
 
 # Convert Audio to Text with Whisper API
+
+# Set parameters
+model_engine = "whisper-1"
+input_file = os.path.join(os.path.dirname("__file__"), "input.mp4")
+print(input_file)
+output_file = os.path.join(os.path.dirname("__file__"), "input.txt")
+
+# Open audio file and read binary data
+with open(input_file, 'rb') as input_data:
+    # Call API with binary data as body
+    response = openai.Audio.transcribe(
+        file=input_data, model=model_engine, response_format="text")
+
+print(response)
+
+# Write text to output file
+with open(output_file, 'w') as f:
+    f.write(response)
+
 
 # Send Text Response to OpenAI API
 

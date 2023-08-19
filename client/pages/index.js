@@ -1,4 +1,4 @@
-import RecordingButton from '../components/RecordingButton';
+import RecordingButton from "../components/RecordingButton";
 
 const Home = () => {
   const handleStartRecording = () => {
@@ -10,15 +10,23 @@ const Home = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-white">
-      <div className="text-center">
-        <div className="mb-4">
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100vh",
+        backgroundColor: "#FFFFFF",
+      }}
+    >
+      <div style={{ textAlign: "center" }}>
+        <div style={{ marginBottom: "1rem" }}>
           <RecordingButton
             onStartRecording={handleStartRecording}
             onStopRecording={handleStopRecording}
           />
         </div>
-        {/* Other UI elements */}
+      
       </div>
     </div>
   );
