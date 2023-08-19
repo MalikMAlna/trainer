@@ -1,12 +1,24 @@
 import RecordingButton from "../components/RecordingButton";
-
+import { useState } from "react";
 const Home = () => {
+  const [isRecording, setIsRecording] = useState(false);
+  const [recordings, setRecordings] = useState([]);
+
   const handleStartRecording = () => {
-    // You can add your logic here when recording starts
+    setIsRecording(true);
+    // Logic when recording starts
   };
 
   const handleStopRecording = () => {
-    // You can add your logic here when recording stops
+    setIsRecording(false);
+    // Logic when recording stops
+
+     setRecordings([...recordings, newRecording]);
+  };
+
+  const handleSendRecording = (recordingsToSend) => {
+    // Logic to send recordings to an external API
+    console.log('Sending recordings:', recordingsToSend);
   };
 
   return (
@@ -26,7 +38,15 @@ const Home = () => {
             onStopRecording={handleStopRecording}
           />
         </div>
-      
+        <p style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
+          {isRecording ? "Recording in progress..." : "Not recording"}
+        </p>
+        {recordings.length > 0 && (
+          <SendRecordingButton
+            recordings={recordings}
+            onSendRecording={handleSendRecording}
+          />
+        )}
       </div>
     </div>
   );

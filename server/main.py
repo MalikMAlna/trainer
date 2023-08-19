@@ -4,6 +4,7 @@ import openai
 import sounddevice as sd
 import numpy as np
 import wavio
+import queue
 
 
 load_dotenv()
@@ -13,37 +14,43 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 # Capture Audio from Microphone
 
 # Parameters for recording
-RATE = 44100    # Sample Rate
-CHANNELS = 2    # Number of channels
-DTYPE = np.int16  # Data-type
-SECONDS = 10     # Length of recording in seconds
-FILENAME = "input.mp4"  # Output filename
+RATE = 44100
+CHANNELS = 2
+DTYPE = np.float32
+SECONDS = 7
+FILENAME = "input.wav"
+CHUNKSIZE = 1024  # Size of each audio chunk
 
-# Create a NumPy array with the shape and type
-shape = (RATE * SECONDS, CHANNELS)
-audio_data = np.zeros(shape, dtype=DTYPE)
+# Queue to hold audio data
+audio_queue = queue.Queue()
 
 # Callback function to capture audio
 
 
 def callback(indata, frames, time, status):
-    audio_data[:frames] = indata
+    if status:
+        print(status)
+    audio_queue.put(indata.copy())
 
 
-# Create a stream object
-with sd.InputStream(callback=callback, channels=CHANNELS, samplerate=RATE, dtype=DTYPE):
+# Record the audio
+with sd.InputStream(callback=callback, channels=CHANNELS, samplerate=RATE, dtype=DTYPE, blocksize=CHUNKSIZE) as stream:
     print("Recording for {} seconds...".format(SECONDS))
-    sd.sleep(SECONDS * 1000)
+    audio_data = np.empty((0, CHANNELS), dtype=DTYPE)
+    for _ in range(int(SECONDS * RATE / CHUNKSIZE)):
+        audio_chunk = audio_queue.get()
+        audio_data = np.vstack((audio_data, audio_chunk))
+    print("Recording complete.")
 
 # Save the audio file
-wavio.write(FILENAME, audio_data, RATE, sampwidth=2)
+wavio.write(FILENAME, audio_data, RATE, sampwidth=3)
 print("Recording saved to {}".format(FILENAME))
 
 # Convert Audio to Text with Whisper API
 
 # Set parameters
 model_engine = "whisper-1"
-input_file = os.path.join(os.path.dirname("__file__"), "input.mp4")
+input_file = os.path.join(os.path.dirname("__file__"), "input.wav")
 print(input_file)
 output_file = os.path.join(os.path.dirname("__file__"), "input.txt")
 
@@ -67,6 +74,9 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 model_engine = "gpt-4"
 
 content = "Can you give me a motivational quote to help me with my workout?"
+
+with open("input.txt", "r") as f:
+    content = f.read()
 
 messages = [{
     "role": "system",

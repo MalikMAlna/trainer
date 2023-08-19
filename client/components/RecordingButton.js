@@ -14,12 +14,12 @@ const RecordingButton = ({ onStartRecording, onStopRecording }) => {
     setIsRecording(false);
     onStopRecording();
   };
-  console.log("is reacording", isRecording);
+
   return (
     <div
       style={{
-        width: "16rem",
-        height: "16rem",
+        width: "4rem",
+        height: "4rem",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -39,13 +39,9 @@ const RecordingButton = ({ onStartRecording, onStopRecording }) => {
           border: "none",
           borderRadius: "50%",
           animation: isRecording ? "blink 1s linear infinite" : "none", // Added animation
+          cursor: "pointer",
         }}
       />
-      {isRecording ? (
-        <p>Recording in process...</p>
-      ) : (
-        <p>Press and hold to record</p>
-      )}
     </div>
   );
 };
