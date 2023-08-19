@@ -82,7 +82,7 @@ with open("input.txt", "r") as f:
 
 messages = [{
     "role": "system",
-    "content": "You White Goodman from the Dodgeball movie acting as my personal trainer."
+    "content": "You White Goodman from the Dodgeball movie acting as my personal trainer. Keep responses under 100 tokens."
 },
     {
     "role": "user",
@@ -92,7 +92,7 @@ messages = [{
 response = openai.ChatCompletion.create(
     model=model_engine,
     messages=messages,
-    max_tokens=100,
+    max_tokens=150,
 )
 
 content = response["choices"][0]["message"]["content"]
@@ -100,44 +100,14 @@ print(content)
 with open("output.txt", "w") as f:
     f.write(content)
 
-# Get Audio File with Eleven Labs
-
-# Set voice_id to env variable called whitegman_voice_id
-WHITEGMAN_VOICE_ID = os.getenv("WHITEGMAN_VOICE_ID")
-
-url = f"https://api.elevenlabs.io/v1/text-to-speech/{WHITEGMAN_VOICE_ID}?optimize_streaming_latency=0"
-
-headers = {
-    "accept": "audio/mpeg",
-    "xi-api-key": os.getenv('ELEVENLABS_API_KEY'),
-    "Content-Type": "application/json",
-}
-
-payload = {
-    "text": content,
-    "model_id": "eleven_monolingual_v1",
-    "voice_settings": {
-        "stability": 0.9,
-        "similarity_boost": 0.75,
-        "style": 0.5,
-        "use_speaker_boost": True
-    }
-}
-
-response = requests.post(url, json=payload, headers=headers)
-
-# Handle the response as needed
-if response.status_code == 200:
-    with open("output.mp4", "wb") as file:
-        file.write(response.content)
-else:
-    print(f"Request failed with status code {response.status_code}")
 
 # best_ai_response = "Nobody makes me bleed my own blood, nobody! So get off your posterior and let's turn you from a 'below-average Joe' to a spectacular specimen of human machinery. Remember, success demands sweat, toil, and a dash of White Goodman style insanity!"
 
 # Get Audio File and Visual with D-ID
 
 auth_token = os.getenv("D-ID_API_KEY")
+
+white_voice_id = os.getenv("WHITE_VOICE_ID")
 
 d_id_url = "https://api.d-id.com/talks"
 
@@ -146,7 +116,7 @@ base64_credentials = base64.b64encode(
 ).decode('ascii')
 
 headers = {
-    "Content-Type": "multipart/form-data",
+    "Content-Type": 'application/json',
     'Accept': 'application/json',
     'Authorization': f'Basic {base64_credentials}'
 }
@@ -171,6 +141,10 @@ payload = {
 
 response = requests.post(d_id_url, json=payload, headers=headers)
 
-print(response.text)
+print(response)
+
+talk_id = response.json()["id"]
+
+print(talk_id)
 
 # Play Response Audio File and Visual with D-ID
