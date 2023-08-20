@@ -2,3 +2,4 @@
 */*.mp4
 */*.wav
 */*.txt
+*/__pycache__/

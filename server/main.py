@@ -160,7 +160,7 @@ async def read_talk_id():
 
     print(response)
 
-    talk_id = response.json()["id"]
+    talk_id = response.json().get("id")
 
     talk_url = f"https://api.d-id.com/talks/{talk_id}/"
 
