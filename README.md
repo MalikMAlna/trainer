@@ -16,7 +16,7 @@ trAIner is an innovative AI-powered virtual personal trainer application that pr
 
 - Frontend: The frontend of the trAIner app is built using Next.js and Tailwind CSS, offering a responsive and engaging user interface.
 
-- Backend: The Python backend powers the core functionalities of the app, integrating various AI services:
+- Backend: The FastAPI Python backend powers the core functionalities of the app, integrating various AI services:
 
   - OpenAI: The backend utilizes OpenAI for speech-to-text conversion and for generating text-based responses.
 
