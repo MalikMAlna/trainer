@@ -6,7 +6,7 @@ trAIner is an innovative AI-powered virtual personal trainer application that pr
 
 - Conversational Interaction: trAIner utilizes advanced AI models to engage in natural language conversations with users, offering guidance, motivation, and exercise instructions.
 
-- Generative Text-to-Speech: The app employs 11 Labs' powerful generative text-to-speech technology to give the AI avatar a lifelike and dynamic voice.
+- Generative Text-to-Speech: The app employs ElevenLabs' powerful generative text-to-speech technology to give the AI avatar a lifelike and dynamic voice.
 
 - Interactive Avatar: trAIner employs D-ID's interactive avatar technology, allowing users to interact with a lifelike virtual personal trainer who demonstrates exercises and provides feedback.
 
