@@ -1,5 +1,4 @@
-//js
-module.exports = () => {
+const nextConfig = () => {
   const rewrites = async () => {
     return [
       {
@@ -15,4 +14,6 @@ module.exports = () => {
   return {
     rewrites,
   };
-};
+}
+
+module.exports = nextConfig
