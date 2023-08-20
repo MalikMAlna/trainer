@@ -180,5 +180,3 @@ async def read_talk_id():
     result_url = response.json().get("result_url")
 
     return {"result_url": result_url}
-
-# Play Response Audio File and Visual with D-ID
