@@ -31,14 +31,16 @@ trAIner is an innovative AI-powered virtual personal trainer application that pr
 
 ## Frontend
 
-1. Install dependencies: `npm install`
-2. Run the development server: `npm run dev`
-3. Access the app in your browser at `http://localhost:3000`
+1. Navigate to the client directory: `cd client`
+2. Install dependencies: `npm install`
+3. Run the development server: `npm run dev`
+4. Access the app in your browser at `http://localhost:3000`
 
 ## Backend
 
-1. Install Python dependencies `pip install -r requirements.txt`
-2. Set up environment variables by creating a `.env` file with the following:
+1. Navigate to the server directory: `cd server`
+2. Install Python dependencies `pip install -r requirements.txt`
+3. Set up environment variables by creating a `.env` file with the following:
 
 ```
 OPENAI_API_KEY=your_openai_api_key
@@ -46,7 +48,7 @@ D-ID_API_KEY=your_did_api_key
 WHITEGMAN_VOICE_ID=your_whitegman_voice_id
 ```
 
-3. Run the FastAPI server: `uvicorn main:app --host 0.0.0.0 --port 8000`
+4. Run the FastAPI server: `uvicorn main:app --host 0.0.0.0 --port 8000`
 
 ## Usage
 
