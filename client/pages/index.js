@@ -1,15 +1,6 @@
 import RecordingButton from "../components/RecordingButton";
 import { useState, useEffect } from "react";
 import ReactPlayer from "react-player/lazy";
-import fs from "fs/promises";
-
-export async function getServerSideProps() {
-  const talkId = await fs.readFile(process.env.TALK_ID_PATH, "utf8");
-
-  return {
-    props: { talkId: talkId },
-  };
-}
 
 const fallingItemsStyle = {
   position: "absolute",

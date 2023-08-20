@@ -124,8 +124,6 @@ async def read_talk_id():
 
     auth_token = os.getenv("D-ID_API_KEY")
 
-    bearer_token = os.getenv("D-ID_BEARER_TOKEN")
-
     white_gman_voice_id = os.getenv("WHITEGMAN_VOICE_ID")
 
     d_id_url = "https://api.d-id.com/talks"
