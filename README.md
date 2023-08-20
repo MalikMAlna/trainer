@@ -20,7 +20,7 @@ trAIner is an innovative AI-powered virtual personal trainer application that pr
 
   - OpenAI: The backend utilizes OpenAI for speech-to-text conversion and for generating text-based responses.
 
-  - 11 Labs: Generative text-to-speech technology from 11 Labs is employed to give the AI avatar a natural and expressive voice.
+  - ElevenLabs: Generative text-to-speech technology from 11 Labs is employed to give the AI avatar a natural and expressive voice.
 
   - D-ID: The interactive talking avatar is created using D-ID's technology, providing users with a visually appealing and engaging experience.
 
@@ -48,11 +48,11 @@ D-ID_API_KEY=your_did_api_key
 WHITEGMAN_VOICE_ID=your_whitegman_voice_id
 ```
 
-4. Run the FastAPI server: `uvicorn main:app --host 0.0.0.0 --port 8000`
+4. Run the FastAPI server: `uvicorn main:app --reload`
 
 ## Usage
 
 1. Access the trAIner app in your browser.
-2. Start a conversation with the AI avatar by typing or speaking your requests.
+2. Start a conversation with the AI avatar by speaking your requests after pressing the record button.
 3. Follow the avatar's instructions for workouts, exercises, and motivation.
 4. Interact with the lifelike avatar and engage in a dynamic workout session.
