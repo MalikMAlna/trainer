@@ -115,38 +115,20 @@ const Home = ({ talkId }) => {
   // let audioStream;
 
   const handleStartRecording = async () => {
-    // try {
-    //   audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    //   mediaRecorder = new MediaRecorder(audioStream);
-    //   mediaRecorder.ondataavailable = (event) => {
-    //     if (event.data.size > 0) {
-    //       setRecordedChunks([...recordedChunks, event.data]);
-    //     }
-    //   };
-    //   mediaRecorder.start();
-    //   setIsRecording(true);
-    // } catch (error) {
-    //   console.error("Error starting recording:", error);
-    // }
-    // const talkId = "tlk_bxzGQGb5u-bjXNjJ_jCXQ";
-    // const { talkId } = useHomeProps();
     setVideoLink(null);
     setIsRecording(true);
     try {
-      const response = await fetch(`https://api.d-id.com/talks/${talkId}`, {
-        headers: {
-          Authorization: `Basic ${process.env.NEXT_PUBLIC_D_ID_API_KEY}`,
-        },
+      const res = await fetch("http://127.0.0.1:8000/api/get_talk_id", {
+        mode: "cors",
       });
 
-      if (!response.ok) {
+      if (!res.ok) {
         throw new Error("error with d-id api");
       }
-      const data = await response.json();
-      console.log("response", data);
+      const resultUrlRes = await res.json();
+      console.log("result_url", resultUrlRes);
 
-      setVideoLink(data.result_url);
-      setIsRecording(false);
+      setVideoLink(resultUrlRes["result_url"]);
     } catch (e) {
       console.error(e);
     }
@@ -163,7 +145,6 @@ const Home = ({ talkId }) => {
   const handleSendRecording = (recordingsToSend) => {
     if (mediaRecorder && mediaRecorder.state !== "inactive") {
       mediaRecorder.stop();
-      setIsRecording(false);
     }
     if (audioStream) {
       audioStream.getTracks().forEach((track) => track.stop());

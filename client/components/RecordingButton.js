@@ -8,6 +8,10 @@ const RecordingButton = ({
 }) => {
   const handleTouchStart = () => {
     onStartRecording();
+    // Set timeout to stop recording after 7 seconds
+    setTimeout(() => {
+      onStopRecording();
+    }, 7000);
   };
 
   const handleTouchEnd = () => {
